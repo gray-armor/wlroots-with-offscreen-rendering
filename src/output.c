@@ -39,6 +39,8 @@ output_frame_handler(struct wl_listener *listener, void *data)
 
   wlr_renderer_clear(renderer, (float[]){red, 0.3, 0.2, 1});
 
+  offscreen_blit(self->offscreen, 0, 0, 0, 0);
+
   wlr_renderer_end(renderer);
 
   wlr_output_commit(self->wlr_output);

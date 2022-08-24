@@ -1,6 +1,7 @@
 #ifndef WLR_OFF_INTERNAL_H
 #define WLR_OFF_INTERNAL_H
 
+#include <GLES2/gl2.h>
 #include <stdlib.h>
 #include <wlr/backend.h>
 #include <wlr/render/allocator.h>
@@ -42,8 +43,20 @@ void server_destroy(struct server *self);
 struct offscreen {
   struct wlr_egl *egl;
 
+  GLuint fbo;
+  GLuint depth_buffer;
+  GLuint color_buffer;
+
+  GLuint vbo;
+  GLuint program;
+  GLuint vertex_shader;
+  GLuint fragment_shader;
+
   struct wl_event_source *repaint_source;
 };
+
+void offscreen_blit(
+    struct offscreen *self, GLint x, GLint y, GLsizei width, GLsizei height);
 
 struct offscreen *offscreen_create(
     struct wlr_egl *egl, struct wl_display *display);
